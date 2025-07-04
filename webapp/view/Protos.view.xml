@@ -1,0 +1,383 @@
+<mvc:View
+    xmlns:table="sap.ui.mdc.table"
+    xmlns:cssgrid="sap.ui.layout.cssgrid"
+    controllerName="production.controller.Protos"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.uxap"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartfilterbar="sap.ui.comp.smartfilterbar"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:m="sap.m"
+    xmlns:forms="sap.ui.layout.form"
+    xmlns:tnt="sap.tnt"
+    xmlns:macros="sap.fe.macros"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+>
+    <m:Page bindingContexts="{path:'mProduction>/'}">
+        <ObjectPageLayout
+            id="ObjectPageLayout"
+            upperCaseAnchorBar="false"
+            bindingContexts=""
+        >
+            <headerTitle>
+                <ObjectPageDynamicHeaderTitle id="dinamicHeader1">
+                    <expandedHeading>
+                        <m:Title text="{i18n>titleWout}" />
+                    </expandedHeading>
+                </ObjectPageDynamicHeaderTitle>
+            </headerTitle>
+
+            <headerContent>
+                <m:FlexBox
+                    wrap="Wrap"
+                    fitContainer="true"
+                >
+                    <m:Avatar
+                        src="./test-resources/sap/uxap/images/robot.png"
+                        class="sapUiMediumMarginEnd sapUiSmallMarginBottom"
+                        displayShape="Square"
+                        displaySize="L"
+                    />
+
+                    <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                        <m:Title
+                            text="{i18n>textLine}"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <m:ObjectStatus
+                            text="{WoutJSON>/WorkCenter}"
+                            state="None"
+                            class="sapMObjectStatusLarge"
+                            icon="sap-icon://space-navigation"
+                        />
+                    </m:VBox>
+
+                    <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                        <m:Title
+                            text="{i18n>textCenter}"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <m:ObjectStatus
+                            text="{WoutJSON>/Plant}"
+                            icon="sap-icon://sap-box"
+                            class="sapMObjectStatusLarge"
+                        />
+                    </m:VBox>
+
+                    <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                        <m:Title
+                            text="{i18n>textWorker}"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <m:ObjectStatus
+                            text="{WoutJSON>/Operario}"
+                            state="Success"
+                            icon="sap-icon://employee"
+                            class="sapMObjectStatusLarge"
+                        />
+                    </m:VBox>
+                </m:FlexBox>
+            </headerContent>
+
+            <sections>
+                <ObjectPageSection
+                    titleUppercase="false"
+                    title="Overview"
+                    class="sapUiContentPadding"
+                >
+                    <subSections>
+                        <ObjectPageSubSection title="{i18n>titleOverView}">
+                            <blocks>
+                                <!-- <forms:SimpleForm
+                                    class="sapUxAPObjectPageSubSectionAlignContent"
+                                    layout="ColumnLayout"
+                                    columnsL="3"
+                                > -->
+                                <m:VBox class="sapUiContentPadding">
+                                    <m:Label
+                                        text="{i18n>textProductionOrder}"
+                                    />
+                                    <m:FlexBox>
+                                        <m:Button
+                                            icon="sap-icon://bar-code"
+                                            press="onBarcode"
+                                            class="sapUiTinyMarginEnd"
+                                            enabled="{ViewJSON>/ProductionScanBtn}"
+                                        />
+                                        <m:Input
+                                            id="Aufnr"
+                                            value="{WoutJSON>/Aufnr}"
+                                            showValueHelp="true"
+                                            valueHelpRequest=".onValueHelpAufnr"
+                                            change="getProdOrder"
+                                            class="sapUiSmallMarginBottom"
+                                            enabled="{ViewJSON>/InputProductionOrder}"
+                                        />
+                                    </m:FlexBox>
+                                    <m:Label text="{i18n>textMaterial}" />
+                                    <m:Input
+                                        id="Matnr"
+                                        value="{WoutJSON>/Matnr}"
+                                        enabled="false"
+                                        description="{WoutJSON>/MaterialDescription}"
+                                    />
+                                </m:VBox>
+
+                                <!-- <m:Input value="{WoutJSON>/Matnr}"
+                                    liveChange="onGetMatnr"></m:Input> -->
+                                <!-- <m:Text text="{WoutJSON>/Matnr}" /> -->
+
+                                <m:VBox>
+                                    <m:Label text="{i18n>textLabelOperation}" />
+                                    <m:FlexBox>
+                                        <m:Button
+                                            icon="sap-icon://bar-code"
+                                            press="onBarcodeOperation"
+                                            class="sapUiTinyMarginEnd"
+                                            enabled="{ViewJSON>/OperationScanBtn}"
+                                        />
+                                        <m:Input
+                                            id="operationInput"
+                                            value="{WoutJSON>/Operation}"
+                                            showValueHelp="true"
+                                            description="{WoutJSON>/OperationDesc}"
+                                            valueHelpRequest="onValueHelpAufpl"
+                                            change="getGoodMovements"
+                                            class="sapUiSmallMarginBottom"
+                                            enabled="{ViewJSON>/InputOperation}"
+                                        />
+                                    </m:FlexBox>
+                                    <m:Label
+                                        text="{i18n>textLabelworkstation}"
+                                    />
+                                    <m:Input
+                                        id="workstationInput"
+                                        value="{WoutJSON>/OperationWorkCenter}"
+                                        enabled="false"
+                                    />
+                                </m:VBox>
+
+                                <m:VBox>
+                                    <m:Label text="{i18n>textQuantDeclared}" />
+                                    <m:Input
+                                        id="quantityToDec"
+                                        value="{WoutJSON>/CantDecl}"
+                                        enabled="{ViewJSON>/InputCantDecl}"
+                                        change="getGoodMovements"
+                                        class="sapUiSmallMarginBottom"
+                                        type="Number"
+                                    />
+                                    <m:Label text="{i18n>textConfQuanUnit}" />
+                                    <m:Input
+                                        value="{WoutJSON>/ConfQuanUnit}"
+                                        enabled="false"
+                                    />
+                                </m:VBox>
+
+                                <!-- </forms:SimpleForm> -->
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+
+                <ObjectPageSection
+                    titleUppercase="false"
+                    title="{i18n>textTitleConsumption}"
+                >
+                    <subSections>
+                        <ObjectPageSubSection
+                            title="{i18>textTitleConsumption}"
+                        >
+                            <blocks>
+                                <m:VBox
+                                    class="sapUiLargeMarginEnd sapUiSmallMarginBottom"
+                                >
+                                    <!-- <smartTable:SmartTable
+                                        id="LineItemsSmartTable"
+                                        entitySet="ProductionOrder"
+                                        tableType="Table"
+                                        header="Lista"
+                                        showRowCount="true"
+                                        class="sapUiResponsiveContentPadding"
+                                        enableAutoColumnWidth="true"
+                                        editTogglable="true"
+                                        initiallyVisibleFields="Matnr,aufnr,objnr,fecha"
+                                    > -->
+                                    <m:Toolbar style="Clear">
+                                        <m:ToolbarSpacer />
+                                        <m:Button
+                                            text="{i18n>textButtonAdd}"
+                                            press=".onAgregarConsumo"
+                                            class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+                                            icon="sap-icon://add-document"
+                                            type="Ghost"
+                                            enabled="{ViewJSON>/AddBtnEnabled}"
+                                        />
+                                        <m:Button
+                                            id="deleteBtn"
+                                            text="{i18n>textButtonDelete}"
+                                            class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+                                            icon="sap-icon://delete"
+                                            type="Reject"
+                                            enabled="false"
+                                            press="onDeleteConsumption"
+                                        />
+                                        <m:Button
+                                            id="editBtn"
+                                            text="{i18n>textButtonEdit}"
+                                            class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+                                            type="Accept"
+                                            icon="sap-icon://edit"
+                                            enabled="false"
+                                            press="onEditConsumption"
+                                        />
+                                        <m:Button
+                                            id="editSaveBtn"
+                                            text="{i18n>textButtonSave}"
+                                            class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+                                            type="Success"
+                                            icon="sap-icon://save"
+                                            visible="false"
+                                            press="onSaveEdit"
+                                        />
+                                    </m:Toolbar>
+
+                                    <m:Table
+                                        id="consumptionTable"
+                                        mode="MultiSelect"
+                                        autoPopinMode="true"
+                                        noDataText="No consumptions available."
+                                        selectionChange="onSelectionChange"
+                                        items="{ path: 'GoodMovements>/'}"
+                                    >
+                                        <m:columns>
+                                            <m:Column width="12em">
+                                                <m:Text
+                                                    text="{i18n>textMaterial}"
+                                                />
+                                            </m:Column>
+
+                                            <m:Column width="12em">
+                                                <m:Text
+                                                    text="{i18n>textQuantity}"
+                                                />
+                                            </m:Column>
+
+                                            <m:Column width="12em">
+                                                <m:Text
+                                                    text="{i18n>textBatch}"
+                                                />
+                                            </m:Column>
+                                            <m:Column width="12em">
+                                                <m:Text
+                                                    text="{i18n>textLabelStore}"
+                                                />
+                                            </m:Column>
+                                            <m:Column width="12em">
+                                                <m:Text text="Move Type" />
+                                            </m:Column>
+                                        </m:columns>
+                                        <m:items>
+                                            <m:ColumnListItem>
+                                                <m:cells>
+                                                    <!-- <m:Text text="{GoodMovements>Matnr}" />
+                                                    <m:Text text="{GoodMovements>Quantity}" /> -->
+                                                    <m:FlexBox>
+                                                        <m:Button
+                                                            icon="sap-icon://bar-code"
+                                                            press="onBarcodeConsumption"
+                                                            class="sapUiTinyMarginEnd"
+                                                            enabled="false"
+                                                        />
+                                                        <m:Input
+                                                            value="{GoodMovements>Material}"
+                                                            editable="false"
+                                                            change="onCheckMatnr"
+                                                        />
+                                                    </m:FlexBox>
+                                                    <m:Input
+                                                        value="{GoodMovements>Quantity}"
+                                                        editable="false"
+                                                        type="Number"
+                                                    />
+                                                    <m:Text
+                                                        text="{GoodMovements>Batch}"
+                                                    />
+                                                    <m:Text
+                                                        text="{GoodMovements>StgeLoc}"
+                                                    />
+                                                    <m:Text
+                                                        text="{GoodMovements>MoveType}"
+                                                    />
+                                                </m:cells>
+                                            </m:ColumnListItem>
+                                        </m:items>
+                                    </m:Table>
+                                    <!-- </smartTable:SmartTable> -->
+                                </m:VBox>
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+
+                <ObjectPageSection
+                    titleUppercase="false"
+                    title="{i18n>titleActions}"
+                >
+                    <subSections>
+                        <ObjectPageSubSection title="{i18n>titleActions}">
+                            <blocks>
+                                <forms:SimpleForm
+                                    class="sapUxAPObjectPageSubSectionAlignContent"
+                                    layout="ColumnLayout"
+                                    columnsL="2"
+                                >
+                                    <core:Title
+                                        text="{i18n>textDeclarQuantity}"
+                                    />
+                                    <m:RadioButton
+                                        id="radiobutton1"
+                                        selected="true"
+                                    />
+
+                                    <!-- <core:Title
+                                        text="{i18n>textDeclarQuantClose}"
+                                    />
+                                    <m:RadioButton id="radiobutton2" /> -->
+                                </forms:SimpleForm>
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+            </sections>
+        </ObjectPageLayout>
+
+        <m:footer>
+            <m:OverflowToolbar>
+                <m:Button
+                    icon="sap-icon://message-popup"
+                    type="{message>/type}"
+                    text="{message>/messageLength}"
+                    press=".handleMessagePopoverPress"
+                    ariaHasPopup="Dialog"
+                />
+                <m:ToolbarSpacer />
+                <m:Button
+                    text="{i18n>textButtonSave}"
+                    type="Accept"
+                    icon="sap-icon://save"
+                    press=".onSave"
+                    enabled="{ViewJSON>/SaveBtnEnabled}"
+                />
+                <m:Button
+                    text="{i18n>textButtonReject}"
+                    type="Reject"
+                    icon="sap-icon://decline"
+                    press="onReject"
+                />
+            </m:OverflowToolbar>
+        </m:footer>
+    </m:Page>
+</mvc:View>

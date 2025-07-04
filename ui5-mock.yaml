@@ -1,0 +1,41 @@
+specVersion: "3.1"
+metadata:
+  name: production
+type: application
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: false
+        ui5:
+          path:
+            - /resources
+            - /test-resources
+          url: https://ui5.sap.com
+        backend:
+          - path: /sap
+            url: https://vhhpwds4ci.sap.horseapps.tech:44300
+          - path: "/https:"
+            url: https://vhhpwds4ci.sap.horseapps.tech:44300
+            client: "100"
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: sap-fe-mockserver
+      beforeMiddleware: csp
+      configuration:
+        mountPath: /
+        services:
+          - urlPath: /sap/opu/odata/sap/YDOM_0000_SRV
+            generateMockData: true
+            metadataXmlPath: ./webapp/localService/mainService/metadata.xml
+            mockdataRootPath: ./webapp/localService/data
+          - urlPath: https://vhhpwds4ci.sap.horseapps.tech:44300/sap/opu/odata/sap/ZSB_ZDOM_W_0001_API
+            metadataPath: ./webapp/localService/ZSB_ZDOM_W_0001_API/metadata.xml
+            mockdataPath: ./webapp/localService/ZSB_ZDOM_W_0001_API/mockdata
+            generateMockData: true
+        annotations: []

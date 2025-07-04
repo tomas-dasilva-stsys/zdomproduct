@@ -1,0 +1,62 @@
+<core:FragmentDefinition xmlns:table="sap.ui.table"
+	xmlns="sap.ui.comp.valuehelpdialog"
+	xmlns:m="sap.m"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:core="sap.ui.core">
+	<ValueHelpDialog
+		title="{i18n>textValueHelpDialog}"
+		ok=".onValueHelpOkPressKunnr"
+		cancel=".onExitKunnr"
+		
+		key="Kunnr"		
+		descriptionKey="Name_org1"
+		supportMultiselect="false"		
+	>
+		<filterBar>			
+			<fb:FilterBar search="onFilterBarSearchKunnr">
+				<fb:filterGroupItems>
+					<fb:FilterGroupItem
+						groupName="__$INTERNAL$"
+						name="Kunnr"
+						label="{i18n>textFilterLabelKunnr}"
+						visibleInFilterBar="true"
+					>
+						<fb:control>
+							<m:Input name="Kunnr" />
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem
+						groupName="__$INTERNAL$"
+						name="Vbeln"
+						label="{i18n>textFilterLabelVbeln}"
+						visibleInFilterBar="true"
+					>
+						<fb:control>
+							<m:Input name="Vbeln" />
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem
+						groupName="__$INTERNAL$"
+						name="Posnr"
+						label="{i18n>textFilterLabelPosnr}"
+						visibleInFilterBar="true"
+					>
+						<fb:control>
+							<m:Input name="Posnr" />
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem
+						groupName="__$INTERNAL$"
+						name="Name_org1"
+						label="{i18n>textFilterLabelName_org1}"
+						visibleInFilterBar="true"
+					>
+						<fb:control>
+							<m:Input name="Name_org1" />
+						</fb:control>
+					</fb:FilterGroupItem>
+				</fb:filterGroupItems>
+			</fb:FilterBar>
+		</filterBar>		
+	</ValueHelpDialog>
+</core:FragmentDefinition>

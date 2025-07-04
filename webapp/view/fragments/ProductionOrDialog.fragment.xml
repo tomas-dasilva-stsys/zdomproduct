@@ -1,0 +1,134 @@
+<core:FragmentDefinition
+    xmlns:table="sap.ui.table"
+    xmlns="sap.ui.comp.valuehelpdialog"
+    xmlns:m="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core"
+>
+    <!-- <ValueHelpDialog
+        title="{i18n>textValueHelpDialog}"
+        ok=".onValueHelpOkPressAufnr"
+        cancel=".onExitAufnr"
+        key="ProductionOrder"
+        descriptionKey="Name"
+        supportMultiselect="false"
+    > -->
+    <m:Dialog
+        title="{i18n>titleFragOrder}"
+        resizable="true"
+        class="sapUiResponsiveContentPadding"
+    >
+        <m:content>
+            <table:Table
+                id="prodOrTable"
+                selectionMode="Single"
+                selectionBehavior="Row"
+                enableSelectAll="false"
+                showNoData="true"
+                cellClick="onCellClick"
+                rows="{pOrData>/}"
+            >
+                <table:extension>
+                    <!-- <m:OverflowToolbar
+                        class="sapUiMediumMarginBottom"
+                        style="Clear"
+                    > -->
+                    <!-- <m:Label text="Production Order:"/>
+                        <m:SearchField
+                            placeholder="Filter"
+                            value=""
+                            search="filterGlobally"
+                            width="15rem"
+                        /> -->
+                    <fb:FilterBar search="onFilterBarSearch">
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem
+                                groupName="__$INTERNAL$"
+                                name="gstrs"
+                                label="{i18n>textFilterLabelDate}"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <m:DateRangeSelection
+                                        id="DRS2"
+                                        name="gstrs"
+                                        class="DRS1"
+                                        value="{
+                                                'type': 'sap.ui.model.type.DateInterval',
+                                                'formatOptions': {
+                                                    'pattern': 'yyyy/MM/dd'
+                                                },
+                                                'parts': [
+                                                    {
+                                                        'type': 'sap.ui.model.type.Date',
+                                                        'path': '/start'
+                                                    },
+                                                    {
+                                                        'type': 'sap.ui.model.type.Date',
+                                                        'path': '/end'
+                                                    }
+                                                ]
+                                            }"
+                                        change="handleChange"
+                                    />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                    <!-- </m:OverflowToolbar> -->
+                </table:extension>
+                <table:columns>
+                    <table:Column>
+                        <m:Label text="{i18n>textItemlAufnr}" />
+                        <table:template>
+                            <m:Text text="{pOrData>aufnr}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column>
+                        <m:Label text="{i18n>textManufacQuant}" />
+                        <table:template>
+                            <m:Text text="{pOrData>sbmng}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column>
+                        <m:Label text="{i18n>textProgress}" />
+                        <table:template>
+                            <m:Text text="{pOrData>porcentaje}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column>
+                        <m:Label text="{i18n>textItemgstrp}" />
+                        <table:template>
+                            <m:Text
+                                text="{path: 'pOrData>gstrs', formatter: '.formatter.formatDate'}"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column>
+                        <m:Label text="{i18n>textLabelHour}" />
+                        <table:template>
+                            <m:Text
+                                text="{path: 'pOrData>fecha_gsuzs', formatter: '.formatter.formatTime'}"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column>
+                        <m:Label text="{i18n>textItemobjnr}" />
+                        <table:template>
+                            <m:Text text="{pOrData>objnr}" />
+                        </table:template>
+                    </table:Column>
+                </table:columns>
+            </table:Table>
+        </m:content>
+        <m:footer>
+            <m:Toolbar>
+                <m:ToolbarSpacer />
+                <m:Button
+                    text="{i18n>textButtonCancel}"
+                    press="onClose"
+                />
+            </m:Toolbar>
+        </m:footer>
+    </m:Dialog>
+</core:FragmentDefinition>

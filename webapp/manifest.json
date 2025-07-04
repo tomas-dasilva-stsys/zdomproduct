@@ -1,0 +1,221 @@
+{
+    "_version": "1.59.0",
+    "sap.app": {
+        "id": "production",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.14.2",
+            "toolsId": "52ff8c0b-badd-458e-a473-151f1dc0ee80"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/sap/ZSB_ZDOM_W_0001_API/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/mainService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "ZDOM_0000_SRV_01": {
+                "uri": "/sap/opu/odata/sap/ZDOM_0000_SRV_01/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/ZDOM_0000_SRV_01/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "dependencies": {
+            "minUI5Version": "1.120.0",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {},
+                "sap.uxap": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "production.i18n.i18n",
+                    "supportedLocales": [
+                        "","en","es","pt"
+                    ],
+                    "fallbackLocale": ""
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {}
+            },
+            "mProduction": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
+            "ZDOM_0000_SRV_01": {
+                "dataSource": "ZDOM_0000_SRV_01",
+                "preload": true,
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": false,
+                    "metadataUrlParams": {
+                        "sap-value-list": "none"
+                    },
+                    "useBatch": false
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "production.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "RouteMain",
+                    "pattern": "",
+                    "target": [
+                        "TargetMain"
+                    ]
+                },
+                {
+                    "name": "RouteWout",
+                    "pattern": "Wout/{Operario},{Plant},{WorkCenter}",
+                    "target": [
+                        "TargetWout"
+                    ]
+                },
+                {
+                    "name": "RouteRfid",
+                    "pattern": "Rfid/{Operario},{Plant},{WorkCenter},{ktext}",
+                    "target": [
+                        "TargetRFID"
+                    ]
+                },
+                {
+                    "name": "RouteCSRfid",
+                    "pattern": "CSRfid/{Operario},{Plant},{WorkCenter},{ktext}",
+                    "target": [
+                        "TargetCSRfid"
+                    ]
+                },
+                {
+                    "name": "RouteOvens",
+                    "pattern": "Ovens/{Operario},{Plant},{WorkCenter},{ktext}",
+                    "target": [
+                        "TargetOvens"
+                    ]
+                },
+                {
+                    "name": "RouteProtos",
+                    "pattern": "Protos/{Operario},{Plant},{WorkCenter},{ktext}",
+                    "target": [
+                        "TargetProtos"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetMain": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Main",
+                    "viewName": "Main"
+                },
+                "TargetWout": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Wout",
+                    "viewName": "Wout"
+                },
+                "TargetRFID": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Rfid",
+                    "viewName": "Rfid"
+                },
+                "TargetCSRfid": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "CSRfid",
+                    "viewName": "CSRfid"
+                },
+                "TargetOvens": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Ovens",
+                    "viewName": "Ovens"
+                },
+                "TargetProtos": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Protos",
+                    "viewName": "Protos"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "production.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    }
+}

@@ -1,0 +1,61 @@
+<mvc:View controllerName="production.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:ux="sap.uxap"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+    <Page id="pageMain" title="{i18n>titlePag}">
+
+        <content>
+            <!-- <Panel headerText="{i18n>headerText}" class="sapUiResponsiveMargin" width="auto">
+
+                <l:HorizontalLayout id="verticallayoutView"
+                    class="sapUiContentPadding">
+                    <Input id="userIdInput"
+                        value="{MainJSON>/Operario}"
+                        class="sapUiSmallMarginBottom"
+                        placeholder="{i18n>inputLogin}" width="auto"
+                        maxLength="8" />
+                    <Button id="buttonIngresar"
+                        text="{i18n>accessButton}"
+                        press=".onLoginPress"
+                        icon="sap-icon://visits" width="100%" />
+                </l:HorizontalLayout>     
+            </Panel> -->
+
+            <VBox>
+                <Panel headerText="{i18n>headerText}">
+                    <FlexBox>
+                        <Label text="{i18n>textLine}" class="sapUiSmallMarginEnd"> </Label>
+                        <Select id="id_SelectLinea"
+                            class="sapUiSmallMarginEnd"
+                            forceSelection="true"
+                            selectedKey="{Position}"
+                            items="{ path: 'MainJSON>/SelectLinea'}"
+                            required="true"
+                            maxWidth="100%"
+                        >
+                            <core:Item
+                                key="{MainJSON>Position}"
+                                text="{MainJSON>WorkCenter} - {MainJSON>ktext}"
+                            />
+                        </Select>
+                        <Label text="{i18n>textWorker}" class="sapUiSmallMarginEnd"> </Label>
+                        <Input
+                            value="{MainJSON>/Operario}"
+                            width="auto"
+                            maxLength="8"
+                            class="sapUiSmallMarginEnd"
+                            change=".onOperario" />
+                        <Button
+                            text="{i18n>accessButton}"
+                            press=".onLoginPress"
+                            icon="sap-icon://visits" width="100%"
+                            class="sapUiSmallMarginEnd"
+                            enabled="{ViewJSON>/LoginBtnEnabled}" />
+                    </FlexBox>
+                </Panel>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

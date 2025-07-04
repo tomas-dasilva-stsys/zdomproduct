@@ -1,0 +1,91 @@
+<core:FragmentDefinition
+    xmlns:table="sap.ui.table"
+    xmlns="sap.ui.comp.valuehelpdialog"
+    xmlns:m="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core"
+>
+    <!-- <ValueHelpDialog
+        title="{i18n>textValueHelpDialog}"
+        ok=".onValueHelpOkPressAufnr"
+        cancel=".onExitAufnr"
+        key="aufnr"
+        descriptionKey="Name"
+        supportMultiselect="false"
+    >
+        <m:FlexBox>
+            <m:Label text="Material:" />
+            <m:Input value="" />
+        </m:FlexBox>
+    </ValueHelpDialog> -->
+    <m:Dialog
+        title="{i18n>textTitleAddConsumption}"
+        resizable="true"
+        draggable="true"
+    >
+        <m:VBox
+            class="sapUiResponsiveContentPadding"
+            width="400px"
+        >
+            <m:FlexBox
+                direction="Column"
+                class="sapUiResponsiveContentPadding"
+            >
+                <m:Label text="{i18n>textMaterial}:" required="true" />
+                <m:FlexBox>
+                    <m:Button
+                        icon="sap-icon://bar-code"
+                        press="onBarcodeConsumption"
+                        class="sapUiTinyMarginEnd"
+                    />
+                    <m:ToolbarSpacer />
+                    <m:Input
+                        id="materialConsumption"
+                        value=""
+                        class="sapUiSmallMarginBottom"
+                        change="onChangeConsumption"
+                        valueStateText="{i18n>textMaterialRequired}"
+                    />
+                </m:FlexBox>
+                <m:Label text="{i18n>textQuantity}:"  required="true"/>
+                <m:Input
+                    id="quantityConsumption"
+                    type="Number"
+                    value=""
+                    class="sapUiSmallMarginBottom"
+                    change="onChangeConsumption"
+                    valueStateText="{i18n>textQuantityRequired}"
+                />
+                <m:Label text="{i18n>textBatch}:" />
+                <m:Input
+                    id="batchConsumption"
+                    value=""
+                    class="sapUiSmallMarginBottom"
+                    enabled="false"
+                />
+                <m:Label text="{i18n>textLabelStore}:" />
+                <m:Input
+                    id="storeConsumption"
+                    value=""
+                    class="sapUiSmallMarginBottom"
+                    enabled="false"
+                />
+            </m:FlexBox>
+        </m:VBox>
+        <m:footer>
+            <m:Toolbar>
+                <m:ToolbarSpacer />
+                <m:Button
+                    text="{i18n>textButtonConfirm}"
+                    type="Emphasized"
+                    press="onConfirmConsumption"
+                />
+                <m:Button
+                    text="{i18n>textButtonCancel}"
+                    type="Reject"
+                    press="onCloseConsumptionDialog"
+                />
+            </m:Toolbar>
+        </m:footer>
+    </m:Dialog>
+</core:FragmentDefinition>

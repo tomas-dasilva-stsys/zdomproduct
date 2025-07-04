@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="cds_zsb_zdom_w_0001" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="OperarioType" sap:label="Line, Center" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="bname"/>
+                </Key>
+                <Property Name="bname" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:label="User" sap:quickinfo="User Name in User Master Record"/>
+                <Property Name="Plant" Type="Edm.String" MaxLength="40" sap:label="Parameter value"/>
+                <Property Name="WorkCenter" Type="Edm.String" MaxLength="40" sap:label="Parameter value"/>
+            </EntityType>
+            <EntityType Name="MaterialOperationType" sap:label="Operator and Reference Material" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="WorkCenterInternalID"/>
+                    <PropertyRef Name="WorkCenterTypeCode"/>
+                    <PropertyRef Name="Plant"/>
+                    <PropertyRef Name="WorkCenter"/>
+                </Key>
+                <Property Name="WorkCenterInternalID" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:text="WorkCenterInternalID_Text" sap:label="Object ID" sap:quickinfo="Object ID of the resource"/>
+                <Property Name="WorkCenterInternalID_Text" Type="Edm.String" MaxLength="40" sap:label="Work Center Text" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="WorkCenterTypeCode" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Object Type" sap:quickinfo="Object types of the CIM resource"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant"/>
+                <Property Name="WorkCenter" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="UpperCase" sap:label="Work Center"/>
+                <Property Name="arbid" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:label="Object ID" sap:quickinfo="Object ID of the resource"/>
+                <Property Name="aufpl" Type="Edm.String" MaxLength="10" sap:display-format="NonNegative" sap:label="Opertn task list no." sap:quickinfo="Routing number of operations in the order"/>
+                <Property Name="aplzl" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:label="Counter" sap:quickinfo="General counter for order"/>
+            </EntityType>
+            <EntityType Name="ProductionOrderType" sap:label="Production Order" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="WorkCenterInternalID"/>
+                    <PropertyRef Name="WorkCenterTypeCode"/>
+                    <PropertyRef Name="Plant"/>
+                    <PropertyRef Name="WorkCenter"/>
+                </Key>
+                <Property Name="WorkCenterInternalID" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:text="WorkCenterInternalID_Text" sap:label="Object ID" sap:quickinfo="Object ID of the resource"/>
+                <Property Name="WorkCenterInternalID_Text" Type="Edm.String" MaxLength="40" sap:label="Work Center Text" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="WorkCenterTypeCode" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Object Type" sap:quickinfo="Object types of the CIM resource"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant"/>
+                <Property Name="WorkCenter" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="UpperCase" sap:label="Work Center"/>
+            </EntityType>
+            <EntityType Name="QuantityTFAType" sap:label="Theoretical quantity," sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="OrderNumber"/>
+                </Key>
+                <Property Name="OrderNumber" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:label="Order" sap:quickinfo="Order Number"/>
+            </EntityType>
+            <EntityType Name="QuantityFType" sap:label="Quantity" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="OrderNumber"/>
+                </Key>
+                <Property Name="OrderNumber" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:label="Order" sap:quickinfo="Order Number"/>
+                <Property Name="Material" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="RequirementQuantity" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="Unit" sap:label="Requirement Quantity"/>
+                <Property Name="Unit" Type="Edm.String" MaxLength="3" sap:label="Base Unit of Measure" sap:semantics="unit-of-measure"/>
+            </EntityType>
+            <EntityType Name="MaterialQuaintityOType" sap:label="Material" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="matnr"/>
+                    <PropertyRef Name="WorkCenterInternalID"/>
+                    <PropertyRef Name="WorkCenterTypeCode"/>
+                    <PropertyRef Name="Plant"/>
+                    <PropertyRef Name="WorkCenter"/>
+                </Key>
+                <Property Name="matnr" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="WorkCenterInternalID" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Object ID" sap:quickinfo="Object ID of the resource"/>
+                <Property Name="WorkCenterTypeCode" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Object Type" sap:quickinfo="Object types of the CIM resource"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant"/>
+                <Property Name="WorkCenter" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="UpperCase" sap:label="Work Center"/>
+                <Property Name="arbid" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:label="Object ID" sap:quickinfo="Object ID of the resource"/>
+                <Property Name="aufpl" Type="Edm.String" MaxLength="10" sap:display-format="NonNegative" sap:label="Opertn task list no." sap:quickinfo="Routing number of operations in the order"/>
+                <Property Name="aplzl" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:label="Counter" sap:quickinfo="General counter for order"/>
+            </EntityType>
+            <EntityType Name="QuantityPType" sap:label="get QuantityP" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="aufnr"/>
+                    <PropertyRef Name="objid"/>
+                    <PropertyRef Name="aufpl"/>
+                    <PropertyRef Name="aplzl"/>
+                </Key>
+                <Property Name="aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:label="Order" sap:quickinfo="Order Number"/>
+                <Property Name="objid" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Object ID" sap:quickinfo="Object ID of the resource"/>
+                <Property Name="aufpl" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="NonNegative" sap:label="Opertn task list no." sap:quickinfo="Routing number of operations in the order"/>
+                <Property Name="aplzl" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Counter" sap:quickinfo="General counter for order"/>
+                <Property Name="mgvrg" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Operation Quantity" sap:quickinfo="Operation Total Quantity"/>
+            </EntityType>
+            <EntityType Name="MaterialQuantityPType" sap:label="MaterialQuantityP" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="aufnr"/>
+                    <PropertyRef Name="matnr"/>
+                </Key>
+                <Property Name="aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:label="Order" sap:quickinfo="Order Number"/>
+                <Property Name="matnr" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="vornrT" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Undefined range (can be used for patch levels)" sap:heading=""/>
+            </EntityType>
+            <EntityType Name="PalletTypeType" sap:label="Pallet Type Field" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="matnr"/>
+                    <PropertyRef Name="werks"/>
+                </Key>
+                <Property Name="matnr" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant"/>
+                <Property Name="knumh" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Condition Record No." sap:quickinfo="Number of Condition Record"/>
+                <Property Name="packnrT" Type="Edm.String" MaxLength="22" sap:display-format="UpperCase" sap:label="x" sap:quickinfo="Text string 22 characters"/>
+            </EntityType>
+            <EntityType Name="OfCloseType" sap:label="Get Status" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="aufnr"/>
+                </Key>
+                <Property Name="aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:label="Order" sap:quickinfo="Order Number"/>
+                <Property Name="stat" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Status" sap:quickinfo="Object status"/>
+            </EntityType>
+            <EntityType Name="ContRFIDType" sap:label="Get RFID" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="cuobj"/>
+                </Key>
+                <Property Name="cuobj" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="NonNegative" sap:label="Internal object no." sap:quickinfo="Configuration (internal object number)"/>
+                <Property Name="objek" Type="Edm.String" MaxLength="90" sap:label="Object" sap:quickinfo="Key of Object to be Classified"/>
+                <Property Name="atinn" Type="Edm.String" MaxLength="30" sap:display-format="UpperCase" sap:label="30 Characters" sap:heading=""/>
+            </EntityType>
+            <EntityType Name="SerialNumberUMType" sap:label="Get SerialNuimberAndUM" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="aufnr"/>
+                </Key>
+                <Property Name="aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:label="Order" sap:quickinfo="Order Number"/>
+                <Property Name="matnr" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="sernp" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Serial No. Profile" sap:quickinfo="Serial Number Profile"/>
+            </EntityType>
+            <EntityContainer Name="cds_zsb_zdom_w_0001_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="Operario" EntityType="cds_zsb_zdom_w_0001.OperarioType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="MaterialOperation" EntityType="cds_zsb_zdom_w_0001.MaterialOperationType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ProductionOrder" EntityType="cds_zsb_zdom_w_0001.ProductionOrderType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="QuantityTFA" EntityType="cds_zsb_zdom_w_0001.QuantityTFAType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="QuantityF" EntityType="cds_zsb_zdom_w_0001.QuantityFType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="MaterialQuaintityO" EntityType="cds_zsb_zdom_w_0001.MaterialQuaintityOType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="QuantityP" EntityType="cds_zsb_zdom_w_0001.QuantityPType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="MaterialQuantityP" EntityType="cds_zsb_zdom_w_0001.MaterialQuantityPType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="PalletType" EntityType="cds_zsb_zdom_w_0001.PalletTypeType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="OfClose" EntityType="cds_zsb_zdom_w_0001.OfCloseType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ContRFID" EntityType="cds_zsb_zdom_w_0001.ContRFIDType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="SerialNumberUM" EntityType="cds_zsb_zdom_w_0001.SerialNumberUMType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <Annotations Target="cds_zsb_zdom_w_0001.cds_zsb_zdom_w_0001_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+            </Annotations>
+            <atom:link rel="self" href="https://vhhpwds4ci.sap.horseapps.tech:44300/sap/opu/odata/sap/ZSB_ZDOM_W_0001_API/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://vhhpwds4ci.sap.horseapps.tech:44300/sap/opu/odata/sap/ZSB_ZDOM_W_0001_API/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

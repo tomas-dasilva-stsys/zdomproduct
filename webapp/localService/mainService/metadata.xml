@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="YDOM_0000_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="CloseTrade" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Aufnr"/>
+                </Key>
+                <Property Name="Aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Order" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Flag" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Single-Character Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ProductionDeclaration" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Operario"/>
+                    <PropertyRef Name="Werks"/>
+                    <PropertyRef Name="Aufnr"/>
+                </Key>
+                <Property Name="Operario" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Order" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Matnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Packnr" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="PackInstruction" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Proces" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Single-Character Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Header" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Operario"/>
+                </Key>
+                <Property Name="Linea" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Operario" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="ProductionDeclarationSet" Relationship="YDOM_0000_SRV.HeaderDeclaration" FromRole="FromRole_HeaderDeclaration" ToRole="ToRole_HeaderDeclaration"/>
+            </EntityType>
+            <Association Name="HeaderDeclaration" sap:content-version="1">
+                <End Type="YDOM_0000_SRV.Header" Multiplicity="1" Role="FromRole_HeaderDeclaration"/>
+                <End Type="YDOM_0000_SRV.ProductionDeclaration" Multiplicity="*" Role="ToRole_HeaderDeclaration"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_HeaderDeclaration">
+                        <PropertyRef Name="Operario"/>
+                    </Principal>
+                    <Dependent Role="ToRole_HeaderDeclaration">
+                        <PropertyRef Name="Operario"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="YDOM_0000_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="CloseTradeSet" EntityType="YDOM_0000_SRV.CloseTrade" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ProductionDeclarationSet" EntityType="YDOM_0000_SRV.ProductionDeclaration" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="HeaderSet" EntityType="YDOM_0000_SRV.Header" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="HeaderDeclarationSet" Association="YDOM_0000_SRV.HeaderDeclaration" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="HeaderSet" Role="FromRole_HeaderDeclaration"/>
+                    <End EntitySet="ProductionDeclarationSet" Role="ToRole_HeaderDeclaration"/>
+                </AssociationSet>
+                <FunctionImport Name="CloseTradeButton" ReturnType="YDOM_0000_SRV.CloseTrade" EntitySet="CloseTradeSet" m:HttpMethod="GET" sap:action-for="YDOM_0000_SRV.CloseTrade">
+                    <Parameter Name="Aufnr" Type="Edm.String" Mode="In" MaxLength="12"/>
+                </FunctionImport>
+            </EntityContainer>
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <atom:link rel="self" href="https://vhhpwds4ci.sap.horseapps.tech:44300/sap/opu/odata/sap/YDOM_0000_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://vhhpwds4ci.sap.horseapps.tech:44300/sap/opu/odata/sap/YDOM_0000_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:table="sap.ui.table" xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:sfi="sap.ui.comp.smartfield">
+	<Dialog>
+		<content>
+			<Table id="id_TableRFID" mode="SingleSelect"
+				items="{ path: 'WoutJSON>/RFIDTable' }">
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title text="{i18n>textTitleScanMaterial}" level="H2" />
+						<ToolbarSpacer />
+						<Button text="+" type="Transparent" press="onAppend" />
+						<Button text="-" type="Transparent" press="onDelete" />
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="12em">
+						<Text text="{i18n>textTitleRFIDCounter}" />
+					</Column>
+					<Column demandPopin="true" hAlign="End">
+						<Text text="RFID" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Input value="{WoutJSON>Cantidad}" editable="false"></Input>							
+						</cells>
+						<cells>
+							<HBox>
+								<Input value="{WoutJSON>Rfid}" maxLength="20" 
+								change="onCheckMatnrRFID" liveChange="onChangeMatnrRFID"></Input>
+								<Button press="onScanAgregar" icon="sap-icon://bar-code"></Button>
+							</HBox>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<buttons>
+			<Button text="{i18n>textButtonSave}" type="Accept" icon="sap-icon://save" press=".onAceptarRFID" />                
+			<Button text="{i18n>textButtonCancel}" iconFirst="true" width="auto"
+				iconDensityAware="false" type="Reject" icon="sap-icon://decline" press="onSalirRFID" />
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

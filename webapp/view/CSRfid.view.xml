@@ -1,0 +1,419 @@
+<mvc:View
+    controllerName="production.controller.CSRfid"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.uxap"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:m="sap.m"
+    xmlns:forms="sap.ui.layout.form"
+    xmlns:tnt="sap.tnt"
+    xmlns:macros="sap.fe.macros"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+>
+    <m:Page bindingContexts="{path:'mProduction>/'}">
+        <ObjectPageLayout
+            id="ObjectPageLayout2"
+            upperCaseAnchorBar="false"
+            bindingContexts=""
+        >
+            <headerTitle>
+                <ObjectPageDynamicHeaderTitle id="dinamicHeader3">
+                    <expandedHeading>
+                        <m:Title text="{i18n>titleWout}" />
+                    </expandedHeading>
+                    <actions>
+                        <m:Button
+                            text="{i18n>CSRFIDEdit}"
+                            type="Emphasized"
+                        />
+                    </actions>
+                </ObjectPageDynamicHeaderTitle>
+            </headerTitle>
+
+            <headerContent>
+                <m:FlexBox
+                    wrap="Wrap"
+                    fitContainer="true"
+                >
+                    <m:Avatar
+                        src="./test-resources/sap/uxap/images/robot.png"
+                        class="sapUiMediumMarginEnd sapUiSmallMarginBottom"
+                        displayShape="Square"
+                        displaySize="L"
+                    />
+
+                    <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                        <m:Title
+                            text="{i18n>textCenter}"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <m:ObjectStatus
+                            text="{WoutJSON>/Plant}"
+                            icon="sap-icon://sap-box"
+                            class="sapMObjectStatusLarge"
+                        />
+                    </m:VBox>
+
+                    <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                        <m:Title
+                            text="{i18n>textWorker}"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <m:ObjectStatus
+                            text="{WoutJSON>/Operario}"
+                            state="Success"
+                            icon="sap-icon://employee"
+                            class="sapMObjectStatusLarge"
+                        />
+                    </m:VBox>
+
+                    <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                        <m:Title
+                            text="{i18n>textLine}"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <m:ObjectStatus
+                            text="{WoutJSON>/WorkCenter} - {WoutJSON>/ktext}"
+                            state="None"
+                            class="sapMObjectStatusLarge"
+                            icon="sap-icon://space-navigation"
+                        />
+                    </m:VBox>
+
+                </m:FlexBox>
+            </headerContent>
+
+            <sections>
+                <ObjectPageSection
+                    titleUppercase="false"
+                    title="{i18n>titleOverView}"
+                >
+                    <subSections>
+                        <ObjectPageSubSection title="{i18n>titleOverView}">
+                            <blocks>
+                                <m:VBox class="sapUiContentPadding">
+                                    <m:Label text="{i18n>textMaterial}" />
+                                    <m:FlexBox>
+                                        <m:Button
+                                            icon="sap-icon://bar-code"
+                                            press="onBarcode"
+                                            ariaDescribedBy="defaultButtonDescription genericButtonDescription"
+                                            width="25%"
+                                        />
+                                        <m:Input
+                                            id="matnrInput4"
+                                            value="{WoutJSON>/Matnr}"
+                                            description="{WoutJSON>/MatnrDesc}"
+                                            showValueHelp="true"
+                                            valueHelpRequest="onValueHelpMatnr"
+                                            change="onGetMatnr"
+                                            editable="{ViewJSON>/InputMaterial}"
+                                        />
+                                    </m:FlexBox>
+                                </m:VBox>
+
+                                <m:VBox>
+                                    <m:Label
+                                        text="{i18n>titleWoutInput}"
+                                    />
+                                    <m:FlexBox>
+                                        <m:Input
+                                            id="productionOrder2"
+                                            value="{WoutJSON>/Aufnr}"
+                                            showValueHelp="true"
+                                            valueHelpRequest=".onValueHelpAufnr"
+                                            editable="{ViewJSON>/InputProductionOrder}"
+                                            change="onChangeAufnr"
+                                        />
+                                    </m:FlexBox>
+                                </m:VBox>
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+
+                <ObjectPageSection
+                    titleUppercase="false"
+                    title="{i18n>titleProductionDetail}"
+                >
+                    <subSections>
+                        <ObjectPageSubSection
+                            title="{i18n>titleProductionDetail}"
+                        >
+                            <blocks>
+                                <forms:SimpleForm
+                                    class="sapUxAPObjectPageSubSectionAlignContent"
+                                    layout="ColumnLayout"
+                                    columnsL="3"
+                                >
+                                    <m:Label text="{i18n>textTheoQuant}" />
+                                    <m:Text text="{WoutJSON>/CantTeo}" />
+
+                                    <m:Label text="{i18n>textQuantDeclared}" />
+
+                                    <m:Input
+                                        value="{path:'WoutJSON>/Quantity'}"
+                                        type="Number"
+                                        editable="{ViewJSON>/InputQuantity}"
+                                        change=".onCheckQuantity"
+                                    />
+
+                                    <m:Label text="{i18n>textlabelFlagUM}" />
+                                    <m:CheckBox selected="{WoutJSON>/FlagUM}"></m:CheckBox>
+
+                                    <m:Label text="{i18n>textManufacQuant}" />
+                                    <m:Text text="{WoutJSON>/CantDecl}" />
+
+                                    <m:Label text="{i18n>textPalletType}" />
+                                    <!-- <m:Select
+                                        change="onPalletType"
+                                        forceSelection="true"
+                                        selectedKey="{packnrT}"
+                                        editable="{ViewJSON>/SelectPalletType}"
+                                        items="{
+                                        path: 'WoutJSON>/PalletType'                                     
+                                        }"
+                                        required="true"
+                                    >
+                                        <core:Item
+                                            key="{WoutJSON>Position}"
+                                            text="{WoutJSON>packnrT}"
+                                        />
+                                    </m:Select> -->
+                                    <m:Select
+                                        change="onPalletType"
+                                        forceSelection="true"
+                                        selectedKey="{packnrT}"
+                                        editable="{ViewJSON>/SelectPalletType}"
+                                        items="{
+                                        path: 'WoutJSON>/PalletType'                                     
+                                        }"
+                                        required="true"
+                                    >
+                                        <core:Item
+                                            key="{WoutJSON>packnrT}"
+                                            text="{WoutJSON>Embalaje}"
+                                        />
+                                    </m:Select>
+                                    <!-- <m:Input value="{path:'WoutJSON>/Embalaje'}" editable="false" /> -->
+
+                                    <m:Label text="{i18n>textProgress}" />
+                                    <m:Text text="{WoutJSON>/Avance} %" />
+
+                                    <m:Label text="{i18n>textCustomer}"
+                                        visible="{ViewJSON>/InputCustomer}" />
+                                    <m:Select
+                                        id="idCustomerList"
+                                        forceSelection="false"
+                                        change="onCustomerType"
+                                        visible="{ViewJSON>/InputCustomer}"
+                                        selectedKey="{Kunnr}"
+                                        items="{
+                                        path: 'WoutJSON>/Customer'
+                                        }">
+                                        <core:Item key="{WoutJSON>Kunnr}" text="{WoutJSON>Texto}" />
+                                    </m:Select>
+                                    <!-- <m:Select
+                                        forceSelection="false"
+                                        change="onCustomerType"
+                                        visible="{ViewJSON>/InputCustomer}"
+                                        
+                                        selectedKey="{Kunnr}"
+                                        items="{
+                                        path: 'WoutJSON>/Customer'
+                                        }">
+                                        <core:Item key="{WoutJSON>Kunnr}" text="{WoutJSON>Kunnr} - {WoutJSON>Postx}" />                                        
+                                    </m:Select> -->
+                                    <!-- <m:Input
+                                        value="{WoutJSON>/Kunnr}"
+                                        showValueHelp="true"
+                                        editable="{ViewJSON>/InputKunnr}"
+                                        valueHelpRequest=".onValueHelpKunnr"
+                                        description="{WoutJSON>/Name_org1}"
+                                    /> -->
+                                </forms:SimpleForm>
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+
+                <ObjectPageSection
+                    titleUppercase="false"
+                    title="{i18n>textTitleRFID}"
+                    visible="{ViewJSON>/InputRFID}"
+                >
+                    <subSections>
+                        <ObjectPageSubSection title="{i18n>textTitleRFID}">
+                            <blocks>
+                                <forms:SimpleForm
+                                    class="sapUxAPObjectPageSubSectionAlignContent"
+                                    layout="ColumnLayout"
+                                    columnsL="3"
+                                >
+                                    <core:Title
+                                        text="{i18n>textTitleRFIDCounter}"
+                                    />
+                                    <m:Input
+                                        value="{WoutJSON>/RFIDCont}"
+                                        editable="false"
+                                    />
+                                    <core:Title text="{i18n>textTitleRFIDRead}" />
+                                    <m:Button
+                                        text="{i18n>textButtonRFIDRead}"
+                                        icon="sap-icon://bar-code"
+                                        press=".onRFIDRead"
+                                    />
+                                </forms:SimpleForm>
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+
+                <ObjectPageSection
+                    titleUppercase="false"
+                    title="{i18n>textTitleSerialNumberandUM}"
+                    visible="{ViewJSON>/InputUM}"
+                >
+                    <subSections>
+                        <ObjectPageSubSection title="{i18n>textTitleSerialNumberandUM}">
+                            <blocks>
+                                <m:VBox>
+                                    <m:Label text="{i18n>textlabelHandlingUnit}" />
+                                    <m:FlexBox>
+                                        <m:Button
+                                            icon="sap-icon://bar-code"
+                                            press="onBarcodeSerieUm"
+                                            ariaDescribedBy="defaultButtonDescription genericButtonDescription"
+                                            width="25%" />
+                                        <m:Input value="{WoutJSON>/Um}"
+                                            change="onGetSernr" />
+                                    </m:FlexBox>
+                                </m:VBox>
+
+                                <m:VBox>
+                                    <m:Label text="{i18n>textlabelSerialNumberUC}" />
+                                    <m:FlexBox>
+                                        <m:Input value="{WoutJSON>/SernrUm}"
+                                            editable="false" />
+                                    </m:FlexBox>
+                                </m:VBox>
+                            </blocks>
+                            <blocks>
+
+                                <m:VBox class="sapUiContentPadding">
+                                    <m:Label text="{i18n>textlabelSerialNumber}" />
+                                    <m:FlexBox>
+                                        <m:Button
+                                            icon="sap-icon://bar-code"
+                                            press="onBarcodeSerie"
+                                            ariaDescribedBy="defaultButtonDescription genericButtonDescription"
+                                            width="25%"
+                                        />
+                                        <m:Input value="{WoutJSON>/Sernr}" />
+                                    </m:FlexBox>
+                                </m:VBox>
+
+                                <m:VBox>
+                                    <m:Label text="Lote" />
+                                    <m:FlexBox>
+                                        <m:Input value="{WoutJSON>/BatchUm}"
+                                            editable="false" />
+                                    </m:FlexBox>
+                                </m:VBox>
+
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+
+                <ObjectPageSection
+                    titleUppercase="false"
+                    title="{i18n>titleActions}"
+                >
+                    <subSections>
+                        <ObjectPageSubSection title="{i18n>titleActions}">
+                            <blocks>
+                                <forms:SimpleForm
+                                    class="sapUxAPObjectPageSubSectionAlignContent"
+                                    layout="ColumnLayout"
+                                    columnsL="2"
+                                >
+                                    <core:Title
+                                        text="{i18n>textDeclarQuantity}"
+                                    />
+                                    <m:RadioButton
+                                        id="radiobutton7"
+                                        selected="{WoutJSON>/DeclarQuantity}"
+                                    />
+
+                                    <core:Title
+                                        text="{i18n>textDeclarQuantClose}"
+                                    />
+                                    <m:RadioButton
+                                        id="radiobutton6"
+                                        selected="{WoutJSON>/OfClosing}"
+                                    />
+                                </forms:SimpleForm>
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+
+                <ObjectPageSection
+                    titleUppercase="false"
+                    title="{i18n>titleOtherActions}"
+                    visible="{ViewJSON>/ImpregnationPart}"
+                >
+                    <subSections>
+                        <ObjectPageSubSection title="{i18n>titleOtherActions}">
+                            <blocks>
+                                <forms:SimpleForm
+                                    class="sapUxAPObjectPageSubSectionAlignContent"
+                                    layout="ColumnLayout"
+                                >
+                                    <m:Label
+                                        text="{i18n>textImpregnationPart}"
+                                    />
+                                    <m:CheckBox
+                                        selected="{WoutJSON/>Impregpart}"
+                                        select="onImpregpart"
+                                    />
+                                </forms:SimpleForm>
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+            </sections>
+        </ObjectPageLayout>
+
+        <m:footer>
+            <m:OverflowToolbar>
+                <m:Button
+                    id="messagePopoverBtn3"
+                    icon="sap-icon://message-popup"
+                    type="{message>/type}"
+                    text="{message>/messageLength}"
+                    press=".handleMessagePopoverPress"
+                    ariaHasPopup="Dialog"
+                />
+                <m:ToolbarSpacer />
+                <m:ToolbarSpacer />
+                <m:Button
+                    id="saveBtn2"
+                    text="{i18n>textButtonSave}"
+                    type="Accept"
+                    icon="sap-icon://save"
+                    press=".onSave"
+                    enabled="{ViewJSON>/SaveBtnEnabled}"
+                />
+                <m:Button
+                    text="{i18n>textButtonReject}"
+                    type="Reject"
+                    icon="sap-icon://decline"
+                    press="onReject"
+                />
+            </m:OverflowToolbar>
+        </m:footer>
+    </m:Page>
+</mvc:View>

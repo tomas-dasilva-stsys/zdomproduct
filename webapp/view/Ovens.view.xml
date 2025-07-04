@@ -1,0 +1,234 @@
+<mvc:View
+    controllerName="production.controller.Ovens"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:c="sap.ui.core"
+    xmlns:m="sap.m"
+    xmlns="sap.ui.table"    
+    height="100%"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+>
+    <m:Page
+        showHeader="false"
+        enableScrolling="false"
+        class="sapUiContentPadding"
+    >
+        <m:content>
+            <smartTable:SmartTable
+                id="smartTableOvens"
+                tableBindingPath="UmModel>/"
+                
+                entitySet="UmModel>/"
+                header="{i18n>titleOvens}"
+                enableAutoBinding="true"
+                persistencyKey="SmartTableOvensKey"
+                smartFilterId="smartFilterBar"
+                xmlns:smartTable="sap.ui.comp.smarttable"
+                xmlns:m="sap.m"
+                useExportToExcel="false"
+                initiallyVisibleFields="Um,Aufnr,Matnr,Component,Batchid,Quantity,BeginDate,BeginTime,EndDate,EndTime"
+                visible="true"
+                requestAtLeastFields="Um,Aufnr,Matnr,Component,Batchid,Quantity,BeginDate,BeginTime,EndDate,EndTime"
+            >
+                <Table
+                    id="idTableOvens"
+                    rows="{UmModel>/}"
+                    selectionMode="MultiToggle"
+                    rowMode="Auto"
+                    paste="onPaste"
+                    filter="filterOrder"
+                    columnResize="onColumnResize"
+                    alternateRowColors="false">
+                    <extension>
+                        <m:OverflowToolbar style="Clear">
+                            <m:Title text="{i18n>titleOvensFilters}" />
+                            <m:ToolbarSpacer />
+                            <m:SearchField placeholder="Filter" search="filterGlobally"
+                                width="15rem" />
+                        </m:OverflowToolbar>
+                        <m:OverflowToolbar style="Clear">
+                            <m:Avatar src="./test-resources/sap/uxap/images/robot.png"
+                                class="sapUiMediumMarginEnd" displayShape="Square" displaySize="M" />
+                            <m:Title text="{i18n>textLine}" class="sapUiTinyMarginBottom" />
+                            <m:Label text="{modelOperario>/WorkCenter}"
+                                class="sapUiTinyMarginBottom" />
+                            <m:Title text="{i18n>textCenter}" class="sapUiTinyMarginBottom" />
+                            <m:Label text="{modelOperario>/Plant}" class="sapUiTinyMarginBottom" />
+                            <m:Title text="{i18n>textWorker}" class="sapUiTinyMarginBottom" />
+                            <m:Label text="{modelOperario>/Operario}" class="sapUiTinyMarginBottom" />
+                        </m:OverflowToolbar>
+                    </extension>
+                    <columns>
+                        <Column width="100px">
+                            <customData>
+                                <c:CustomData key="p13nData"
+                                    value='\{"columnKey": "Um","leadingProperty": "Um"}' />
+                            </customData>
+                            <m:Label text="{i18n>textlabelHandlingUnit}" />
+                            <template>
+                                <m:Text text="{UmModel>Um}" />
+                            </template>
+                        </Column>
+                        <Column width="100px">
+                            <m:Label text="{i18n>textColumnProductionOrder}" />
+                            <template>
+                                <m:Text text="{UmModel>Aufnr}" />
+                            </template>
+                        </Column>
+                        <Column width="auto">
+                            <m:Label text="{i18n>textColumnMaterialRef}" />
+                            <template>
+                                <m:Text text="{UmModel>Matnr}" />
+                            </template>
+                        </Column>
+                        <Column width="auto">
+                            <m:Label text="{i18n>textColumnMaterialDescription}" />
+                            <template>
+                                <m:Text text="{UmModel>Description}" />
+                            </template>
+                        </Column>
+                        <Column width="auto">
+                            <m:Label text="{i18n>textColumnComponent}" />
+                            <template>
+                                <m:Text text="{UmModel>Component}" />
+                            </template>
+                        </Column>
+                        <Column width="auto">
+                            <m:Label text="{i18n>textColumnMaterialDescription}" />
+                            <template>
+                                <m:Text text="{UmModel>DesComponent}" />
+                            </template>
+                        </Column>
+                        <Column width="auto">
+                            <m:Label text="{i18n>textColumnBatch}" />
+                            <template>
+                                <m:Text text="{UmModel>Batchid}" />
+                            </template>
+                        </Column>
+                        <Column width="auto">
+                            <m:Label text="{i18n>textColumnQuantity}" />
+                            <template>
+                                <m:Text text="{UmModel>Quantity}" />
+                            </template>
+                        </Column>
+                        <Column width="auto">
+                            <m:Label text="{i18n>textManufacQuantPlan}" />
+                            <template>
+                                <m:Text text="{UmModel>Gamng}" />
+                            </template>
+                        </Column>
+                        <Column width="auto">
+                            <m:Label text="{i18n>textManufacQuantRest}" />
+                            <template>
+                                <m:Text text="{UmModel>CantRest}" />
+                            </template>
+                        </Column>
+                        <Column width="auto" hAlign="Center">
+                            <m:Label text="{i18n>textColumnStartDate}" />
+                            <template>
+                                <m:Text
+                                    text="{ path: 'UmModel>BeginDate', formatter: '.formatter.formatDate' }" />
+                            </template>
+                        </Column>
+                        <Column width="auto">
+                            <m:Label text="{i18n>textColumnStartTime}" />
+                            <template>
+                                <m:Text width="80%" text="{UmModel>BeginTime}" />
+                            </template>
+                        </Column>
+                        <Column width="auto" hAlign="Center">
+                            <m:Label text="{i18n>textColumnEndtDate}" />
+                            <template>
+                                <m:Text
+                                    text="{ path: 'UmModel>EndDate', formatter: '.formatter.formatDate' }" />
+                            </template>
+                        </Column>
+                        <Column width="auto">
+                            <m:Label text="{i18n>textColumnEndtTime}" />
+                            <template>
+                                <m:Text text="{UmModel>EndTime}" />
+                            </template>
+                        </Column>
+                    </columns>
+                </Table>
+            </smartTable:SmartTable>
+        </m:content>
+        <m:footer>
+            <m:OverflowToolbar>
+                <m:Button
+                    icon="sap-icon://message-popup"
+                    type="{message>/type}"
+                    text="{message>/messageLength}"
+                    press=".handleMessagePopoverPress"
+                    ariaHasPopup="Dialog"
+                />
+                <m:ToolbarSpacer />
+                <m:Button
+                    tooltip="TEST!!"
+                    icon="sap-icon://delete"
+                    text="SOLO PARA TESTING!!"
+                    press="onTest"
+                    visible="false"
+                >
+                    <m:layoutData>
+                        <m:OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </m:layoutData>
+                </m:Button>
+
+                <m:Button
+                    tooltip="Crear"
+                    icon="sap-icon://create"
+                    text="{i18n>textButtonClose}"
+                    press="handleDetailsPress($event,true)">
+                    <m:layoutData>
+                        <m:OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </m:layoutData>
+                </m:Button>
+
+                <m:Button
+                    tooltip="Crear"
+                    icon="sap-icon://create"
+                    text="{i18n>textButtonDeclare}"
+                    press="handleDetailsPress($event,false)">
+                    <m:layoutData>
+                        <m:OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </m:layoutData>
+                </m:Button>
+
+                <m:Button
+                    tooltip="Add"
+                    icon="sap-icon://add-activity"
+                    text="{i18n>textButtonAddLine}"
+                    press="onAddLine"
+                >
+                    <m:layoutData>
+                        <m:OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </m:layoutData>
+                </m:Button>
+
+                <m:Button
+                    tooltip="delete"
+                    icon="sap-icon://delete"
+                    text="{i18n>textButtonDeleteUnit}"
+                    press="onDelete"
+                >
+                    <m:layoutData>
+                        <m:OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </m:layoutData>
+                </m:Button>
+                <m:Button
+                    tooltip="Add"
+                    icon="sap-icon://add-activity"
+                    text="{i18n>textButtonAddUnit}"
+                    press="onLoadUm"
+                >
+                    <m:layoutData>
+                        <m:OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </m:layoutData>
+                </m:Button>
+            </m:OverflowToolbar>
+        </m:footer>
+    </m:Page>
+</mvc:View>
