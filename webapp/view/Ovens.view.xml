@@ -28,6 +28,7 @@
                 xmlns:smartTable="sap.ui.comp.smarttable"
                 xmlns:m="sap.m"
                 useExportToExcel="false"
+                beforeRebindTable="onBeforeRebindTable"
                 initiallyVisibleFields="Um,Aufnr,Matnr,Component,Batchid,Quantity,BeginDate,BeginTime,EndDate,EndTime"
                 visible="true"
                 requestAtLeastFields="Um,Aufnr,Matnr,Component,Batchid,Quantity,BeginDate,BeginTime,EndDate,EndTime"
@@ -45,7 +46,7 @@
                         <m:OverflowToolbar style="Clear">
                             <m:Title text="{i18n>titleOvensFilters}" />
                             <m:ToolbarSpacer />
-                            <m:SearchField placeholder="Filter" search="filterGlobally"
+                            <m:SearchField id="idSearchField" placeholder="Filter" search="filterGlobally"
                                 width="15rem" />
                         </m:OverflowToolbar>
                         <m:OverflowToolbar style="Clear">

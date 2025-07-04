@@ -822,7 +822,7 @@ sap.ui.define(
 
         const i18nModel = new ResourceModel({
           bundleName: "production.i18n.i18n"
-        });        
+        });
 
         this._dialog = new Dialog({
           //title: "Ingresar Unidad de Manipulación",
@@ -1118,7 +1118,7 @@ sap.ui.define(
 
       filterGlobally: function (oEvent) {
         // Obtener el valor ingresado en el SearchField
-        var oValue = oEvent.getParameter("query");
+        var oValue = oEvent ? oEvent.getParameter("query") : '';
 
         // Obtener la referencia a la tabla
         var oTable = this.getView().byId("idTableOvens");
@@ -1387,6 +1387,10 @@ sap.ui.define(
                   oModel.refresh(true);
                 }
 
+                oTable.getBinding('rows').refresh(true);
+                me.byId('idSearchField').setValue('');
+                me.filterGlobally();
+
               }.bind(this),
               error: function (oError) {
                 me.cleanNotifications();
@@ -1402,11 +1406,25 @@ sap.ui.define(
                 let upDatedMsgs = [...prevMsgs, ...msgsArr];
                 oMessagePopover.getModel().setData(upDatedMsgs);
                 oMessagePopover.getModel().refresh(true);
+                that.getView().getModel('message').getData().messageLength = upDatedMsgs.length;
+                that.getView().getModel('message').getData().type = "Emphasized";
+                that.getView().getModel('message').refresh(true);
                 busyDialog4.close();
+
+                oTable.getBinding('rows').refresh(true);
+                me.byId('idSearchField').setValue('');
+                me.filterGlobally();
               }.bind(this),
             });
         }
       },
+
+      // onBeforeRebindTable: function (oEvent) {
+      //   var oBindingParams = oEvent.getParameter("bindingParams");
+
+      //   // Agregás filtros o parámetros
+      //   oBindingParams.filters.push([]);
+      // },
 
       cleanNotifications: function () {
         this.getView().getModel('message').setProperty('/messageLength', '');
