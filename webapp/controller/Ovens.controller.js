@@ -1146,6 +1146,7 @@ sap.ui.define(
 
         // Aplicar los filtros a la tabla
         oTable.getBinding("rows").filter(aFilters, "Application");
+        // oTable.getBinding('rows').refresh(true);
       },
 
       msToTime: function (ms) {
@@ -1371,23 +1372,39 @@ sap.ui.define(
                 that.getView().getModel('message').getData().type = "Emphasized";
                 that.getView().getModel('message').refresh(true);
 
-                if (oData.ReturnSet.results.length == 0 ||
-                  oData.ReturnSet.results[0].Type == 'S') {
-                  // Si el usuario confirma, proceder a eliminar los registros seleccionados
-                  aSelectedIndices.sort(function (a, b) {
-                    return b - a; // Ordenar los índices de forma descendente para evitar conflictos al eliminar
-                  });
+                if (oData.ReturnSet.results.length == 0 || oData.ReturnSet.results[0].Type == 'S') {
 
-                  aSelectedIndices.forEach(function (iIndex) {
-                    // Eliminar el registro del array de datos
-                    data.splice(iIndex, 1);
-                  });
+                  // if (oDataForProcess.length > 1) {
+                  //   let filterData = [];
 
-                  oModel.setData(data);
+                  //   for (let i = 0; i < oDataForProcess.length; i++) {
+                  //     if (JSON.stringify(data[i]) !== JSON.stringify(oDataForProcess[i])) {
+                  //       filterData.push(oDataForProcess[i]);
+                  //     }
+                  //     continue;
+                  //   }
+                  //   oModel.setData(filterData);
+                  //   oModel.refresh(true);
+                  // }
+                  
+                  let filterData = data.filter(d => JSON.stringify(d) !== JSON.stringify(oDataForProcess[0]));
+                  oModel.setData(filterData);
                   oModel.refresh(true);
+
+                  // Si el usuario confirma, proceder a eliminar los registros seleccionados
+                  // aSelectedIndices.sort(function (a, b) {
+                  //   return b - a; // Ordenar los índices de forma descendente para evitar conflictos al eliminar
+                  // });
+
+                  // aSelectedIndices.forEach(function (iIndex) {
+                  //   // Eliminar el registro del array de datos
+                  //   data.splice(iIndex, 1);
+                  // });
+
+                  // oModel.setData(data);
+                  // oModel.refresh(true);
                 }
 
-                oTable.getBinding('rows').refresh(true);
                 me.byId('idSearchField').setValue('');
                 me.filterGlobally();
 
@@ -1411,7 +1428,6 @@ sap.ui.define(
                 that.getView().getModel('message').refresh(true);
                 busyDialog4.close();
 
-                oTable.getBinding('rows').refresh(true);
                 me.byId('idSearchField').setValue('');
                 me.filterGlobally();
               }.bind(this),
@@ -1419,12 +1435,12 @@ sap.ui.define(
         }
       },
 
-      // onBeforeRebindTable: function (oEvent) {
-      //   var oBindingParams = oEvent.getParameter("bindingParams");
+      onBeforeRebindTable: function (oEvent) {
+        var oBindingParams = oEvent.getParameter("bindingParams");
 
-      //   // Agregás filtros o parámetros
-      //   oBindingParams.filters.push([]);
-      // },
+        // Agregás filtros o parámetros
+        // oBindingParams.filters.push([]);
+      },
 
       cleanNotifications: function () {
         this.getView().getModel('message').setProperty('/messageLength', '');
